@@ -3,7 +3,7 @@ The project should do the following things
 1> should retrieve data weekly through CRON jobs
 2> should have an Admin interface
 3> should use d3.js or similar library[svg based]
-4> should fetch from multiple site
+4> jus concentrate on bigrock
 --------------------------------------
 Problems
 => can't decide how to scrap data xpath/css?
