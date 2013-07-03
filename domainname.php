@@ -15,13 +15,20 @@
 	$errors = libxml_get_errors();
 	
 	$xpath = new DOMXPath($doc);
-	//$lists = $xpath->query('/html/body/div[4]/div/div[4]/div[3]/div[2]/div/div[4]/div[2]/div');
-	$lists = $xpath->query('/*[@class=“price-list”');
+	$lists = $xpath->query('/html/body/div[4]/div/div[4]/div[3]/div[2]/div/div[4]/div[2]/div/ul/li/div');
+	$lists = $xpath->query(".//*[@id='region-top']/div[1]/div[4]/div[2]/div[1]/ul/li/div");
+	//$lists = $xpath->query('/*[@class=“price-list”');
 	
 	foreach($lists as $list){
 		$info[] = $list->nodeValue;
-		echo $list->nodeValue;
+		echo $list->nodeValue."<br />";
 	}
 	
-	echo $errors;
-	var_dump($info);
+	//echo $errors;
+	//var_dump($info);
+	// echo "<pre>";
+	// print_r($info);
+	// echo "</pre>";
+	foreach ($info as $key => $value) {
+		echo $key . " => " . trim($value) . "<br />"; 
+	}
