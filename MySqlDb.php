@@ -47,7 +47,7 @@ class MysqlDB {
 
    /**
     *
-    * @param <string $tableName The name of the table.
+    * @param string $tableName The name of the table.
     * @param array $insertData Data containing information for inserting into the DB.
     * @return boolean Boolean indicating whether the insert query was completed succesfully.
     */
