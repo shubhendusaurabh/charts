@@ -1,5 +1,6 @@
 <?php
-	$db_conn = new PDO('mysql:host=localhost;dbname=results','root','');
+	$db_conn = new PDO('mysql:host=localhost;dbname=test','root','');
+	//$db_conn = new PDO('mysql:host=localhost;dbname=results','root','');
 	//$stmt = $db_conn->query('SELECT * FROM tests');
 	// while($row = $stmt->fetch()){
 		// echo $row['name'] . ' by ' . $row['id'] . "\n";
@@ -20,6 +21,7 @@
 		echo "row updated: " . $db_conn->lastInsertId(). "<br />";
 	}
 	*/
+	/*
 	for ($i=1004510001; $i <= 1004510054; $i++) { 
 		$updateYear = "UPDATE `results`.`students` SET `yearjoin` = '2010' WHERE `students`.`rollno` ={$i}";
 		$stmt = $db_conn->prepare($updateYear);
@@ -32,6 +34,19 @@
 		}
 		
 	}
+	*/
 	
 	
-?>
+	
+	function save($data = null){
+		global $db_conn;
+		$sql = "INSERT INTO `scraper` ( domain, price, date) VALUES (:domain, :price, :date)";
+		$stmt = $db_conn->prepare($sql);
+		
+		$stmt->execute(array(
+			':domain' => $data['domain'],
+			':price'  => $data['price'],
+			':date'   => date('Y-m-d', (time()+12550000))
+		));
+		return $db_conn->lastInsertId();
+	}
