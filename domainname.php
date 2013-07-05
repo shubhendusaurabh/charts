@@ -1,34 +1,60 @@
 <?php
 	
-	//$filename = 'Libraries\Documents\IN Domain Registration & other Domain Registration Pricing List - BigRock.htm';
-	//$filename = 'BigRock.htm';
-	$filename = "http://www.bigrock.in/domain-registration/domain-registration-price.php";
-	$filename = "http://www.bigrock.in/";
+	//require_once 'MySqlDb.php';
+	require 'database.php';
+	require_once "simplehtmldom/simple_html_dom.php";
+	//$db = new MysqlDB('localhost', 'root', '', 'test');
+	$tableName = 'scraper';
+	
 	$filename = "BigRock.htm";
-	$filename = "bigindex.htm";
-	//$data = file_get_contents($filename);
-	//var_dump($data);
-	//$data = 
-	$info = new ArrayObject;
+	
 	$doc = new DOMDocument;
+	
+	$oldSetting = libxml_use_internal_errors(true);
 	$doc->loadHTMLFile($filename);
 	$errors = libxml_get_errors();
 	
 	$xpath = new DOMXPath($doc);
-	$lists = $xpath->query('/html/body/div[4]/div/div[4]/div[3]/div[2]/div/div[4]/div[2]/div/ul/li/div');
-	$lists = $xpath->query(".//*[@id='region-top']/div[1]/div[4]/div[2]/div[1]/ul/li/div");
-	//$lists = $xpath->query('/*[@class=“price-list”');
 	
-	foreach($lists as $list){
-		$info[] = $list->nodeValue;
-		echo $list->nodeValue."<br />";
-	}
+	$lists = $xpath->query(".//*[@id='content-wrapper']/table[1]/tbody/tr/td[1]");
 	
-	//echo $errors;
-	//var_dump($info);
-	// echo "<pre>";
-	// print_r($info);
-	// echo "</pre>";
-	foreach ($info as $key => $value) {
-		echo $key . " => " . trim($value) . "<br />"; 
+	$html = new simple_html_dom();
+	//$xml = $doc->saveHTML($lists->item(1));
+	$xml = "";
+	for ($i=0; $i < $lists->length; $i++) { 
+		$xml .= $doc->saveHTML($lists->item($i)). "<br />";	
+		
 	}
+	//var_dump($xml);
+	// echo PHP_EOL."<br />".PHP_EOL;
+	// echo $xml. PHP_EOL."<br />";
+	//$match = array();
+	
+	$html->load($xml);
+	//$ret = $html->find('td.tld-col', 0);
+	foreach($html->find('.tld-col')as $ret){
+		$subject = $ret->plaintext;
+		echo $ret->plaintext;
+		echo "<br>".PHP_EOL;
+		$domain = "/\.([a-z\.]{2,6})/";
+		$price = "/\d+/";
+		preg_match($domain, $subject, $match);
+		preg_match($price, $subject, $arr);
+		//echo $ret->innertext;
+		$pair['domain'] = $match[0];
+		$pair['price'] = $arr[0];
+		
+		echo save($pair);
+		echo "Timestamp".time();
+		$grr[]	= $pair;
+		//echo $db->insert($tableName, $pair);
+				
+	}
+	//var_dump($grr);
+	// foreach ($pair as $key => $value) {
+		// $insertData = "";
+		// $db->insert($tableName, $pair);
+	// }
+	// foreach($grr as $gr){
+		// echo $db->insert($tableName, $gr);
+	// }
