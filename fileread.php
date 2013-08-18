@@ -1,7 +1,7 @@
 <?php
 	$db_conn = new PDO('mysql:host=localhost;dbname=results','root','');
-	for($n = 904510001; $n <= 904510054; $n++){
-		$filepath = "repaired/0{$n}.htm";
+	for($n = 1204510001; $n <= 1204510052; $n++){
+		$filepath = "repaired/{$n}.htm";
 		$data = file_get_contents($filepath);
 		$oldsetting = libxml_use_internal_errors(TRUE);
 		$info = array();
@@ -20,8 +20,8 @@
 			$info[] = $list->nodeValue;
 		}
 		//var_dump($info);
-		//echo $info[0];
-		//echo "<br />";
+		echo $info[0];
+		echo "<br />";
 		
 		if (empty($info)) {
 			echo "No go for => {$n}<br />";
@@ -55,7 +55,7 @@
 			':rollno' => $info[2],
 			':branch' => 'Computer Science & Engineering',
 			':course' => 'B.Tech',
-			':yearjoin' => '2009'
+			':yearjoin' => '2012'
 		));
 		echo "Last insert id: " . $db_conn->lastInsertId(). "<br />";
 		

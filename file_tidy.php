@@ -1,14 +1,14 @@
 <?php
 	
-	for ($i=904510001; $i <= 904510054 ; $i++) {
+	for ($i=1204510001; $i <= 1204510052 ; $i++) {
 		$tidy = new tidy; 
-		$filepath = "downloads/0{$i}.html";
+		$filepath = "downloads/{$i}.html";
 		if (file_exists($filepath)){
 			$tidy->parseFile($filepath);
 			$issues = $tidy->errorBuffer;
 			print_r($issues);
 			$output = (string)$tidy;
-			$fp = fopen("repaired/0{$i}.htm", 'wb');
+			$fp = fopen("repaired/{$i}.htm", 'wb');
 			fwrite($fp, $output);
 			fclose($fp);
 		}

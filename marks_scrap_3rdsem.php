@@ -3,8 +3,8 @@
 	
 
 	$db_conn = new PDO('mysql:host=localhost;dbname=results','root','');
-	for($n = 904510001; $n <= 904510054; $n++){
-		$filepath = "repaired/0{$n}.htm";
+	for($n = 1104510001; $n <= 1104510059; $n++){
+		$filepath = "repaired/{$n}.htm";
 		if (file_exists($filepath)){
 			$data = file_get_contents($filepath);
 			$oldsetting = libxml_use_internal_errors(TRUE);
@@ -27,7 +27,7 @@
 				//sem 4 => 4 - 12
 				//sem 3 => 14 - 22
 				//sem 7 => 3 - 11
-				for($j = 3; $j <= 11; $j++){
+				for($j = 4; $j <= 12; $j++){
 					$lists = $xpath->query("/html/body/table/tr/td/table[2]/tr[2]/td/table/tr[{$j}]/td");
 					//var_dump($lists);
 					foreach($lists as $list){
@@ -57,7 +57,7 @@
 				//echo $id;
 				/*
 				$query = 'INSERT INTO marks (student_id, branch_id, semester, ele1, ele1int, ele2, ele2int, ele3, ele3int, ele4, ele4int, ele5, ele5int, elp1, elp2, elp3, hgp, total) 
-							VALUES (:id, "1", "7", :ele1, :ele1int, :ele2, :ele2int, :ele3, :ele3int, :ele4, :ele4int, :ele5, :ele5int, :elp1, :elp2, :elp3, :hgp, :total)';
+							VALUES (:id, "1", "4", :ele1, :ele1int, :ele2, :ele2int, :ele3, :ele3int, :ele4, :ele4int, :ele5, :ele5int, :elp1, :elp2, :elp3, :hgp, :total)';
 				$statement = $db_conn->prepare($query);
 				$statement->execute(array(
 					':id' => $id,

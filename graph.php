@@ -48,7 +48,7 @@ foreach($domains as $domain){
 	$data['name'] = $domain['domain'];
 	$s[] = $data;
 }
-//var_dump($data);
+var_dump($s);
 echo json_encode($s);
 ?>
 		<script>

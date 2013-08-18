@@ -25,10 +25,7 @@
 		$xml .= $doc->saveHTML($lists->item($i)). "<br />";	
 		
 	}
-	//var_dump($xml);
-	// echo PHP_EOL."<br />".PHP_EOL;
-	// echo $xml. PHP_EOL."<br />";
-	//$match = array();
+	
 	
 	$html->load($xml);
 	//$ret = $html->find('td.tld-col', 0);
