@@ -1,9 +1,9 @@
 <?php
 
-$season = array(1 => 'Annual', 2 => 'Jan-Feb', 3 => 'Mar-May', 4 => 'Jun-Sep', 5 => 'Oct-Dec');
+$category = array(1 => 'Rural India', 2 => 'Urban India', 3 => 'Total');
 $color = array(1 => '#c05020', 2 => '#f68f6e', 3 => '#f85a6a', 4 => '#c6df45', 5 => '#f0f0f0');
 
-$fp = fopen("maximum-temperature.csv", "r");
+$fp = fopen("data/RD08.csv", "r");
 
 $arr = array();
 while ($line = fgetcsv($fp)) {
@@ -11,30 +11,41 @@ while ($line = fgetcsv($fp)) {
 }
 fclose($fp);
 array_shift($arr);
-//array_shift($arr);
-$temperature = array();
-foreach ($season as $key => $value) {
-	
-	$year = 1901;
+//var_dump($arr);
+$number = array();
+foreach ($category as $key => $value) {
+	$year = 1963;
 	$lol = array();
-	foreach ($arr as $a) {
-		$temp['x'] = mktime(22,0,0,12,13,$year++);
+	foreach($arr as $a){
+		$temp['x'] = mktime(0,0,0,1,1,$year+=10);
 		$temp['y'] = floatval($a[$key]);
 		$lol[] = $temp;
-		$temperature[$value][$year-1] = floatval($a[$key]);
-
+		$number[$value][$year-1] = floatval($a[$key]);
+		//var_dump($year);
 	}
 	$data['data'] = $lol;
 	$data['name'] = $value;
 	$data['color'] = $color[$key];
 	$s[] = $data;
-	$min[] = max($temperature[$value]);
 }
-var_dump($min);
-var_dump($temperature);
 ?>
-
-		<h2>See the mimimum temperature over the years</h2>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Charts</title>
+	<link rel="stylesheet" href="http://localhost/datavisuals/assests/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="http://localhost/datavisuals/assests/css/styles.css" />
+	<link rel="stylesheet" href="http://localhost/datavisuals/assests/css/rickshaw.min.css" />
+	<script src="http://localhost/datavisuals/assests/js/jquery-2.0.0.min.js"></script>
+	<script src="http://localhost/datavisuals/assests/js/jquery-ui-1.9.1.custom.min.js"></script>
+	<script src="http://localhost/datavisuals/assests/js/bootstrap.min.js"></script>
+	<script src="http://localhost/datavisuals/assests/js/d3.min.js"></script>
+	<script src="http://localhost/datavisuals/assests/js/d3.layout.min.js"></script>
+	<script src="http://localhost/datavisuals/assests/js/rickshaw.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<h2>Poverty in India</h2>
 		<div id="chart_container">
 			<div id="y_axis"></div>
 			<div id="chart"></div>
@@ -51,9 +62,9 @@ var_dump($temperature);
 	
 			var graph = new Rickshaw.Graph({
 				element : document.getElementById("chart"),
-				width : 1000,
+				width : 900,
 				height : 350,
-				renderer : 'line',
+				//renderer : 'line',
 				series : <?php echo json_encode($s); ?>
 			});
 			
@@ -85,3 +96,7 @@ var_dump($temperature);
 			graph.render();
 
 		</script>
+
+	</div>
+</body>
+</html>

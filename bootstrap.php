@@ -3,7 +3,7 @@
 $season = array(1 => 'Annual', 2 => 'Jan-Feb', 3 => 'Mar-May', 4 => 'Jun-Sep', 5 => 'Oct-Dec');
 $color = array(1 => '#c05020', 2 => '#f68f6e', 3 => '#f85a6a', 4 => '#c6df45', 5 => '#f0f0f0');
 
-$fp = fopen("maximum-temperature.csv", "r");
+$fp = fopen("data/RD08.csv", "r");
 
 $arr = array();
 while ($line = fgetcsv($fp)) {
@@ -11,6 +11,8 @@ while ($line = fgetcsv($fp)) {
 }
 fclose($fp);
 array_shift($arr);
+//var_dump($arr);
+
 //array_shift($arr);
 $temperature = array();
 foreach ($season as $key => $value) {
@@ -30,10 +32,26 @@ foreach ($season as $key => $value) {
 	$s[] = $data;
 	$min[] = max($temperature[$value]);
 }
-var_dump($min);
-var_dump($temperature);
-?>
 
+//var_dump($min);
+//var_dump($temperature);
+?>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Charts</title>
+	<link rel="stylesheet" href="http://localhost/datavisuals/assests/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="http://localhost/datavisuals/assests/css/styles.css" />
+	<link rel="stylesheet" href="http://localhost/datavisuals/assests/css/rickshaw.min.css" />
+	<script src="http://localhost/datavisuals/assests/js/jquery-2.0.0.min.js"></script>
+	<script src="http://localhost/datavisuals/assests/js/jquery-ui-1.9.1.custom.min.js"></script>
+	<script src="http://localhost/datavisuals/assests/js/bootstrap.min.js"></script>
+	<script src="http://localhost/datavisuals/assests/js/d3.min.js"></script>
+	<script src="http://localhost/datavisuals/assests/js/d3.layout.min.js"></script>
+	<script src="http://localhost/datavisuals/assests/js/rickshaw.min.js"></script>
+</head>
+<body>
+	<div class="container">
 		<h2>See the mimimum temperature over the years</h2>
 		<div id="chart_container">
 			<div id="y_axis"></div>
@@ -53,7 +71,7 @@ var_dump($temperature);
 				element : document.getElementById("chart"),
 				width : 1000,
 				height : 350,
-				renderer : 'line',
+				renderer : 'bar',
 				series : <?php echo json_encode($s); ?>
 			});
 			
@@ -85,3 +103,7 @@ var_dump($temperature);
 			graph.render();
 
 		</script>
+
+	</div>
+</body>
+</html>
